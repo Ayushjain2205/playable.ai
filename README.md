@@ -1,6 +1,6 @@
 ## 🛠️ About Playable.ai
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-playable-zora.netlify.app-brightgreen?style=for-the-badge)](https://playable-zora.netlify.app/)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-playable-zora.netlify.app-brightgreen?style=for-the-badge)](https://playable-etherlink.netlify.app/)
 
 **Playable.ai** is a **vibe-coding platform** that turns plain-English prompts into fully playable mini-arcade games—instantly. It's built for designers, hackers, streamers, and anyone who wants to ship fun, experimental games with zero code.
 
@@ -8,9 +8,7 @@ But Playable.ai isn't just about building—it's about owning.
 
 Each game you create is **minted as its own GameCoin**—a unique ERC-20 token that unlocks access, funding, and monetisation the moment your game goes live.
 
-> 🧱 [Check code implementation](<https://github.com/Ayushjain2205/zappmint-coinathon/blob/main/app/(main)/chats/%5Bid%5D/code-viewer.tsx#L191>)
-
-[🌀 Live Demo](https://playable-zora.netlify.app/)
+[🌀 Live Demo](https://playable-etherlink.netlify.app/)
 
 ---
 
