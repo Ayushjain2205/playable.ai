@@ -1,791 +1,680 @@
 import dedent from "dedent";
 
 export const examples = {
-  "landing page": {
-    prompt: "Build a landing page for a healthcare company",
+  "pixel platformer": {
+    prompt: "Build a pixel art platformer game",
     response: `
-    import React from 'react';
-import { Button } from "/components/ui/button"
-import { Card, CardContent } from "/components/ui/card"
-import { Heart, Shield, Clock, Users } from "lucide-react"
-
-export default function HealthcareLandingPage() {
-  return (
-    <div className="flex flex-col min-h-screen">
-      <header className="px-4 lg:px-6 h-14 flex items-center">
-        <a className="flex items-center justify-center" href="#">
-          <Heart className="h-6 w-6 text-primary" />
-          <span className="sr-only">HealthCare Co.</span>
-        </a>
-        <nav className="ml-auto flex gap-4 sm:gap-6">
-          <a className="text-sm font-medium hover:underline underline-offset-4" href="#">
-            Services
-          </a>
-          <a className="text-sm font-medium hover:underline underline-offset-4" href="#">
-            About
-          </a>
-          <a className="text-sm font-medium hover:underline underline-offset-4" href="#">
-            Contact
-          </a>
-        </nav>
-      </header>
-      <main className="flex-1">
-        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
-                  Your Health, Our Priority
-                </h1>
-                <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
-                  Providing compassionate care and cutting-edge medical solutions to improve your quality of life.
-                </p>
-              </div>
-              <div className="space-x-4">
-                <Button>Book Appointment</Button>
-                <Button variant="outline">Learn More</Button>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
-          <div className="container px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-8">Our Services</h2>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              <Card>
-                <CardContent className="p-6 flex flex-col items-center text-center space-y-2">
-                  <Shield className="h-12 w-12 text-primary" />
-                  <h3 className="text-xl font-bold">Preventive Care</h3>
-                  <p className="text-gray-500 dark:text-gray-400">Regular check-ups and screenings to keep you healthy.</p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-6 flex flex-col items-center text-center space-y-2">
-                  <Users className="h-12 w-12 text-primary" />
-                  <h3 className="text-xl font-bold">Family Medicine</h3>
-                  <p className="text-gray-500 dark:text-gray-400">Comprehensive care for patients of all ages.</p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-6 flex flex-col items-center text-center space-y-2">
-                  <Clock className="h-12 w-12 text-primary" />
-                  <h3 className="text-xl font-bold">24/7 Emergency</h3>
-                  <p className="text-gray-500 dark:text-gray-400">Round-the-clock care for urgent medical needs.</p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-6 flex flex-col items-center text-center space-y-2">
-                  <Heart className="h-12 w-12 text-primary" />
-                  <h3 className="text-xl font-bold">Specialized Care</h3>
-                  <p className="text-gray-500 dark:text-gray-400">Expert treatment for complex health conditions.</p>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
-        <section className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-8">What Our Patients Say</h2>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {[1, 2, 3].map((i) => (
-                <Card key={i}>
-                  <CardContent className="p-6 space-y-2">
-                    <p className="text-gray-500 dark:text-gray-400">
-                      "The care I received was exceptional. The staff was friendly and professional, and the doctors took the time to listen to my concerns."
-                    </p>
-                    <div className="flex items-center space-x-2">
-                      <img
-                        src="github.com/nutlope.png"
-                        alt="Patient"
-                        className="rounded-full"
-                        width={40}
-                        height={40}
-                      />
-                      <div>
-                        <p className="font-medium">Jane Doe</p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">Patient</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Ready to Prioritize Your Health?</h2>
-                <p className="mx-auto max-w-[600px] text-gray-500 md:text-xl dark:text-gray-400">
-                  Book an appointment today and take the first step towards a healthier you.
-                </p>
-              </div>
-              <Button size="lg">Book Appointment Now</Button>
-            </div>
-          </div>
-        </section>
-      </main>
-      <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
-        <p className="text-xs text-gray-500 dark:text-gray-400">© 2023 HealthCare Co. All rights reserved.</p>
-        <nav className="sm:ml-auto flex gap-4 sm:gap-6">
-          <a className="text-xs hover:underline underline-offset-4" href="#">
-            Terms of Service
-          </a>
-          <a className="text-xs hover:underline underline-offset-4" href="#">
-            Privacy
-          </a>
-        </nav>
-      </footer>
-    </div>
-  )
-}
-    `,
-  },
-  "blog app": {
-    prompt: "make me a personal blog",
-    response: `
-    import { useState } from 'react'
-import Link from 'next/link'
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "/components/ui/card"
-import { Button } from "/components/ui/button"
-import { ArrowLeft } from 'lucide-react'
-
-// Sample blog post data with full content
-const blogPosts = [
-  {
-    id: 1,
-    title: "Getting Started with Next.js",
-    excerpt: "Learn how to build modern web applications with Next.js",
-    date: "2023-06-01",
-    readTime: "5 min read",
-    content: "Next.js is a powerful React framework that makes it easy to build fast, SEO-friendly web applications.
-Here are some key features of Next.js:
-
-      1. Server-Side Rendering (SSR): Next.js can render React components on the server, which improves initial load time and SEO.
-      2. Static Site Generation (SSG): You can generate static HTML files at build time for even faster loading.
-      3. API Routes: Next.js allows you to create API endpoints as part of your application.
-      4. File-based Routing: Simply create files in the 'pages' directory to define routes.
-      5. Built-in CSS Support: Next.js supports CSS Modules, Sass, and other styling options out of the box.
-
-      To get started with Next.js, you can use the following command: npx create-next-app@latest my-next-app"
-  },
-  {
-    id: 2,
-    title: "The Power of Tailwind CSS",
-    excerpt: "Discover how Tailwind CSS can streamline your styling workflow",
-    date: "2023-06-05",
-    readTime: "4 min read",
-    content: \`
-      Tailwind CSS is a utility-first CSS framework that can significantly speed up your development process.
-      Instead of writing custom CSS, you apply pre-existing classes directly in your HTML.
-
-      Key benefits of Tailwind CSS include:
-
-      1. Rapid Development: With utility classes, you can quickly style elements without switching between HTML and CSS files.
-      2. Consistency: Tailwind provides a set of pre-defined design tokens, ensuring consistency across your project.
-      3. Customization: You can easily customize the default configuration to match your design system.
-      4. Responsive Design: Tailwind includes responsive utility variants, making it simple to create responsive layouts.
-      5. Smaller File Sizes: When properly configured, Tailwind can eliminate unused CSS, resulting in smaller file sizes.
-
-      To start using Tailwind CSS in your project, you can install it with npm: npm install tailwindcss
-
-      Then, add the Tailwind directives to your CSS file and start using the utility classes in your HTML. Enjoy the power of Tailwind!
-    \`
-
-
-  },
-  {
-    id: 3,
-    title: "React Hooks Explained",
-    excerpt: "Dive deep into React Hooks and how they can simplify your components",
-    date: "2023-06-10",
-    readTime: "6 min read",
-    content: \`
-      React Hooks are functions that allow you to use state and other React features in functional components.
-      They were introduced in React 16.8 and have revolutionized how we write React components.
-
-      Some of the most commonly used hooks are:
-
-      1. useState: Allows you to add state to functional components.
-      2. useEffect: Lets you perform side effects in functional components.
-      3. useContext: Provides a way to pass data through the component tree without manually passing props.
-      4. useReducer: An alternative to useState for managing complex state logic.
-      5. useCallback and useMemo: Help optimize performance by memoizing functions and values.
-
-      Here's a simple example using useState and useEffect:
-
-      Hooks simplify your components and make it easier to reuse stateful logic between components.
-    \`
-  },
-  {
-    id: 4,
-    title: "Building Accessible Web Apps",
-    excerpt: "Learn best practices for creating inclusive and accessible web applications",
-    date: "2023-06-15",
-    readTime: "7 min read",
-    content: \`
-      Creating accessible web applications is crucial for ensuring that all users, including those with disabilities,
-      can use your website effectively. Here are some key principles to follow:
-
-      1. Semantic HTML: Use appropriate HTML elements for their intended purpose. For example, use <button> for buttons and <a> for links.
-      2. ARIA attributes: When necessary, use ARIA (Accessible Rich Internet Applications) attributes to provide additional context to screen readers.
-      3. Keyboard Navigation: Ensure that all interactive elements can be accessed and operated using only a keyboard.
-      4. Color Contrast: Make sure there's sufficient color contrast between text and background for readability.
-      5. Alternative Text: Provide alt text for images to describe their content to users who can't see them.
-      6. Focus Management: Properly manage focus, especially in single-page applications and dynamic content.
-      7. Responsive Design: Create layouts that adapt to different screen sizes and orientations.
-
-      Remember, accessibility is not just about complying with guidelines—it's about creating a better user experience for everyone.
-    \`
-  }
-]
-
-export default function Blog() {
-  const [selectedPost, setSelectedPost] = useState(null);
-
-  return (
-    <div className="min-h-screen flex flex-col">
-      {/* Header */}
-      <header className="bg-primary text-primary-foreground shadow-lg">
-        <div className="container mx-auto px-4 py-6 flex justify-between items-center">
-          <h1 className="text-2xl font-bold">My Awesome Blog</h1>
-          <nav>
-            <ul className="flex space-x-4">
-              <li><Link href="/" className="hover:underline">Home</Link></li>
-              <li><Link href="/about" className="hover:underline">About</Link></li>
-              <li><Link href="/contact" className="hover:underline">Contact</Link></li>
-            </ul>
-          </nav>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="flex-grow container mx-auto px-4 py-8">
-        {selectedPost ? (
-          <div>
-            <Button
-              variant="outline"
-              onClick={() => setSelectedPost(null)}
-              className="mb-4"
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" /> Back to all posts
-            </Button>
-            <h2 className="text-3xl font-bold mb-2">{selectedPost.title}</h2>
-            <p className="text-muted-foreground mb-4">{selectedPost.date} · {selectedPost.readTime}</p>
-            <div className="prose max-w-none">
-              {selectedPost.content.split('\n').map((paragraph, index) => (
-                <p key={index} className="mb-4">{paragraph}</p>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <>
-            <h2 className="text-3xl font-bold mb-6">Latest Posts</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {blogPosts.map((post) => (
-                <Card key={post.id}>
-                  <CardHeader>
-                    <CardTitle>{post.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground">{post.excerpt}</p>
-                  </CardContent>
-                  <CardFooter className="flex justify-between items-center">
-                    <div className="text-sm text-muted-foreground">
-                      {post.date} · {post.readTime}
-                    </div>
-                    <Button variant="outline" onClick={() => setSelectedPost(post)}>Read More</Button>
-                  </CardFooter>
-                </Card>
-              ))}
-            </div>
-          </>
-        )}
-      </main>
-
-      {/* Footer */}
-      <footer className="bg-muted mt-8">
-        <div className="container mx-auto px-4 py-6 text-center">
-          <p>&copy; 2023 My Awesome Blog. All rights reserved.</p>
-          <div className="mt-2">
-            <Link href="/privacy" className="text-sm text-muted-foreground hover:underline mr-4">Privacy Policy</Link>
-            <Link href="/terms" className="text-sm text-muted-foreground hover:underline">Terms of Service</Link>
-          </div>
-        </div>
-      </footer>
-    </div>
-  )
-}
-    `,
-  },
-  "calculator app": {
-    prompt: "make me a calculator app",
-    response: dedent(`
-    I'll create a calculator app using React. This calculator will support basic arithmetic operations: addition, subtraction, multiplication, and division. Let's break it down into components and implement the functionality.
-
-    \`\`\`tsx{filename=calculator.tsx}
-    import { useState } from 'react'
-    import { Button } from "/components/ui/button"
-    import { Card, CardContent, CardHeader, CardTitle } from "/components/ui/card"
-
-    export default function Calculator() {
-      const [display, setDisplay] = useState('0')
-      const [firstOperand, setFirstOperand] = useState<number | null>(null)
-      const [operator, setOperator] = useState<string | null>(null)
-      const [waitingForSecondOperand, setWaitingForSecondOperand] = useState(false)
-
-      const inputDigit = (digit: string) => {
-        if (waitingForSecondOperand) {
-          setDisplay(digit)
-          setWaitingForSecondOperand(false)
-        } else {
-          setDisplay(display === '0' ? digit : display + digit)
-        }
-      }
-
-      const inputDecimal = () => {
-        if (waitingForSecondOperand) {
-          setDisplay('0.')
-          setWaitingForSecondOperand(false)
-          return
-        }
-
-        if (!display.includes('.')) {
-          setDisplay(display + '.')
-        }
-      }
-
-      const clear = () => {
-        setDisplay('0')
-        setFirstOperand(null)
-        setOperator(null)
-        setWaitingForSecondOperand(false)
-      }
-
-      const performOperation = (nextOperator: string) => {
-        const inputValue = parseFloat(display)
-
-        if (firstOperand === null) {
-          setFirstOperand(inputValue)
-        } else if (operator) {
-          const result = calculate(firstOperand, inputValue, operator)
-          setDisplay(String(result))
-          setFirstOperand(result)
-        }
-
-        setWaitingForSecondOperand(true)
-        setOperator(nextOperator)
-      }
-
-      const calculate = (firstOperand: number, secondOperand: number, operator: string) => {
-        switch (operator) {
-          case '+':
-            return firstOperand + secondOperand
-          case '-':
-            return firstOperand - secondOperand
-          case '*':
-            return firstOperand * secondOperand
-          case '/':
-            return firstOperand / secondOperand
-          default:
-            return secondOperand
-        }
-      }
-
-      return (
-        <Card className="w-full max-w-md mx-auto">
-          <CardHeader>
-            <CardTitle className="text-2xl font-bold">Calculator</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-4 gap-2">
-              <div className="col-span-4 bg-gray-100 p-2 rounded mb-2">
-                <div className="text-right text-2xl font-bold">{display}</div>
-              </div>
-              <Button onClick={() => clear()}>C</Button>
-              <Button onClick={() => inputDigit('7')}>7</Button>
-              <Button onClick={() => inputDigit('8')}>8</Button>
-              <Button onClick={() => inputDigit('9')}>9</Button>
-              <Button onClick={() => performOperation('/')}>/</Button>
-              <Button onClick={() => inputDigit('4')}>4</Button>
-              <Button onClick={() => inputDigit('5')}>5</Button>
-              <Button onClick={() => inputDigit('6')}>6</Button>
-              <Button onClick={() => performOperation('*')}>*</Button>
-              <Button onClick={() => inputDigit('1')}>1</Button>
-              <Button onClick={() => inputDigit('2')}>2</Button>
-              <Button onClick={() => inputDigit('3')}>3</Button>
-              <Button onClick={() => performOperation('-')}>-</Button>
-              <Button onClick={() => inputDigit('0')}>0</Button>
-              <Button onClick={() => inputDecimal()}>.</Button>
-              <Button onClick={() => performOperation('=')}>=</Button>
-              <Button onClick={() => performOperation('+')}>+</Button>
-            </div>
-          </CardContent>
-        </Card>
-      )
-    }
-    \`\`\`
-
-    This calculator component provides a simple and functional interface for basic arithmetic operations. Here's a breakdown of its features:
-
-    1. Display: Shows the current input or result.
-    2. Digit buttons: Allow users to input numbers.
-    3. Operation buttons: +, -, *, and / for basic arithmetic operations.
-    4. Clear button (C): Resets the calculator.
-    5. Decimal point button: Allows input of decimal numbers.
-    6. Equals button (=): Performs the calculation.
-
-    The component uses React's useState hook to manage the state of the display, operands, and current operation. The logic handles both immediate execution of operations and chaining of multiple operations."
-    `),
-  },
-  "quiz app": {
-    prompt:
-      "Make me a quiz app about American history. Make sure to give the user an explanation on each question whether they got it right or wrong and keep a score going",
-    response: dedent(`
-      I'll create an interactive quiz app about American history with feedback and scoring functionality.
-
-\`\`\`tsx{filename=history-quiz.tsx}
-import { useState } from 'react'
+    import { useState, useEffect } from 'react'
 import { Button } from "/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "/components/ui/card"
 
-type Question = {
-  question: string
-  options: string[]
-  correctAnswer: string
-  explanation: string
-}
-
-export default function HistoryQuiz() {
-  const [currentQuestion, setCurrentQuestion] = useState(0)
+export default function PixelPlatformer() {
+  const [playerPos, setPlayerPos] = useState({ x: 50, y: 200 })
+  const [isJumping, setIsJumping] = useState(false)
   const [score, setScore] = useState(0)
-  const [showExplanation, setShowExplanation] = useState(false)
-  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
+  const [gameRunning, setGameRunning] = useState(false)
 
-  const questions: Question[] = [
-    {
-      question: "In which year was the Declaration of Independence signed?",
-      options: ["1774", "1775", "1776", "1777"],
-      correctAnswer: "1776",
-      explanation: "The Declaration of Independence was signed on July 4, 1776, marking the formal separation of the 13 American colonies from Great Britain."
-    },
-    {
-      question: "Who was the first President of the United States?",
-      options: ["John Adams", "Thomas Jefferson", "Benjamin Franklin", "George Washington"],
-      correctAnswer: "George Washington",
-      explanation: "George Washington served as the first President from 1789 to 1797 and is often called the 'Father of His Country'."
-    },
-    {
-      question: "Which war was fought between the North and the South United States?",
-      options: ["Revolutionary War", "Civil War", "War of 1812", "Spanish-American War"],
-      correctAnswer: "Civil War",
-      explanation: "The Civil War (1861-1865) was fought between the Union (North) and the Confederacy (South) primarily over slavery and states' rights."
-    },
-    {
-      question: "What was the name of the first successful English settlement in America?",
-      options: ["Plymouth", "Jamestown", "Roanoke", "Massachusetts Bay"],
-      correctAnswer: "Jamestown",
-      explanation: "Jamestown, founded in 1607 in Virginia, was the first permanent English settlement in North America."
-    },
-    {
-      question: "Which amendment to the Constitution abolished slavery?",
-      options: ["13th", "14th", "15th", "16th"],
-      correctAnswer: "13th",
-      explanation: "The 13th Amendment, ratified in 1865, abolished slavery and involuntary servitude throughout the United States."
-    }
+  const platforms = [
+    { x: 0, y: 300, width: 400, height: 20 },
+    { x: 450, y: 250, width: 100, height: 20 },
+    { x: 600, y: 200, width: 100, height: 20 },
+    { x: 750, y: 150, width: 100, height: 20 },
   ]
 
-  const handleAnswer = (selectedOption: string) => {
-    setSelectedAnswer(selectedOption)
-    setShowExplanation(true)
+  const coins = [
+    { x: 200, y: 150, collected: false },
+    { x: 500, y: 200, collected: false },
+    { x: 650, y: 150, collected: false },
+  ]
 
-    if (selectedOption === questions[currentQuestion].correctAnswer) {
-      setScore(score + 1)
+  useEffect(() => {
+    if (!gameRunning) return
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      switch (e.code) {
+        case 'ArrowLeft':
+          setPlayerPos(prev => ({ ...prev, x: Math.max(0, prev.x - 10) }))
+          break
+        case 'ArrowRight':
+          setPlayerPos(prev => ({ ...prev, x: Math.min(350, prev.x + 10) }))
+          break
+        case 'Space':
+          if (!isJumping) {
+            setIsJumping(true)
+            setPlayerPos(prev => ({ ...prev, y: prev.y - 100 }))
+            setTimeout(() => setIsJumping(false), 500)
+          }
+          break
+      }
     }
-  }
 
-  const nextQuestion = () => {
-    setSelectedAnswer(null)
-    setShowExplanation(false)
-    setCurrentQuestion(currentQuestion + 1)
-  }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [gameRunning, isJumping])
 
-  const resetQuiz = () => {
-    setCurrentQuestion(0)
-    setScore(0)
-    setShowExplanation(false)
-    setSelectedAnswer(null)
-  }
+  useEffect(() => {
+    if (!gameRunning) return
 
-  if (currentQuestion >= questions.length) {
-    return (
-      <Card className="w-full max-w-2xl mx-auto mt-8">
-        <CardHeader>
-          <CardTitle className="text-2xl text-center">Quiz Complete!</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <p className="text-xl text-center">
-            Your final score: {score} out of {questions.length}
-          </p>
-          <div className="text-center">
-            <Button onClick={resetQuiz}>Try Again</Button>
-          </div>
-        </CardContent>
-      </Card>
-    )
-  }
+    const gameLoop = setInterval(() => {
+      setPlayerPos(prev => {
+        const newY = prev.y + 2
+        const onPlatform = platforms.some(p => 
+          prev.x + 20 > p.x && prev.x < p.x + p.width && 
+          newY + 20 >= p.y && newY <= p.y + p.height
+        )
+        return { ...prev, y: onPlatform ? p.y - 20 : newY }
+      })
+
+      // Check coin collection
+      coins.forEach((coin, index) => {
+        if (!coin.collected && 
+            playerPos.x < coin.x + 20 && playerPos.x + 20 > coin.x &&
+            playerPos.y < coin.y + 20 && playerPos.y + 20 > coin.y) {
+          setScore(prev => prev + 10)
+          coins[index].collected = true
+        }
+      })
+    }, 50)
+
+    return () => clearInterval(gameLoop)
+  }, [gameRunning, playerPos])
 
   return (
-    <Card className="w-full max-w-2xl mx-auto mt-8">
+    <Card className="w-full max-w-4xl mx-auto">
       <CardHeader>
-        <CardTitle className="text-2xl">American History Quiz</CardTitle>
-        <p className="text-gray-500">Question {currentQuestion + 1} of {questions.length}</p>
-        <p className="text-gray-500">Score: {score}</p>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <h2 className="text-xl font-semibold">{questions[currentQuestion].question}</h2>
-        <div className="grid grid-cols-1 gap-3">
-          {questions[currentQuestion].options.map((option) => (
-            <Button
-              key={option}
-              onClick={() => handleAnswer(option)}
-              variant={
-                showExplanation
-                  ? option === questions[currentQuestion].correctAnswer
-                    ? 'default'
-                    : option === selectedAnswer
-                    ? 'destructive'
-                    : 'outline'
-                  : 'outline'
-              }
-              disabled={showExplanation}
-              className="p-4 text-left"
-            >
-              {option}
-            </Button>
-          ))}
+        <CardTitle className="text-2xl font-bold text-center">Pixel Platformer</CardTitle>
+        <div className="flex justify-between items-center">
+          <span className="text-lg">Score: {score}</span>
+          <Button 
+            onClick={() => setGameRunning(!gameRunning)}
+            variant={gameRunning ? "destructive" : "default"}
+          >
+            {gameRunning ? "Pause" : "Start"}
+          </Button>
         </div>
-
-        {showExplanation && (
-          <div className="mt-4 p-4 rounded-lg bg-gray-100">
-            <p className="font-semibold">
-              {selectedAnswer === questions[currentQuestion].correctAnswer
-                ? '✅ Correct!'
-                : '❌ Incorrect!'}
-            </p>
-            <p className="mt-2">{questions[currentQuestion].explanation}</p>
-            <Button onClick={nextQuestion} className="mt-4">
-              Next Question
-            </Button>
+      </CardHeader>
+      <CardContent>
+        <div className="relative w-full h-400 bg-sky-200 border-4 border-gray-800 overflow-hidden">
+          {/* Player */}
+          <div 
+            className="absolute w-5 h-5 bg-red-500 border-2 border-red-700"
+            style={{ 
+              left: playerPos.x, 
+              top: playerPos.y,
+              transition: 'left 0.1s ease-out'
+            }}
+          />
+          
+          {/* Platforms */}
+          {platforms.map((platform, index) => (
+            <div
+              key={index}
+              className="absolute bg-green-600 border-2 border-green-800"
+              style={{
+                left: platform.x,
+                top: platform.y,
+                width: platform.width,
+                height: platform.height
+              }}
+            />
+          ))}
+          
+          {/* Coins */}
+          {coins.map((coin, index) => !coin.collected && (
+            <div
+              key={index}
+              className="absolute w-4 h-4 bg-yellow-400 border-2 border-yellow-600 rounded-full"
+              style={{
+                left: coin.x,
+                top: coin.y
+              }}
+            />
+          ))}
+          
+          {/* Instructions */}
+          <div className="absolute bottom-4 left-4 text-sm bg-black bg-opacity-50 text-white p-2 rounded">
+            <p>Arrow Keys: Move | Space: Jump</p>
           </div>
-        )}
+        </div>
       </CardContent>
     </Card>
   )
 }
-      \`\`\`
-
-This quiz app includes the following features:
-
-1. Five questions about American history
-2. Multiple choice answers
-3. Immediate feedback on whether the answer was correct or wrong
-4. Detailed explanations for each question
-5. Score tracking throughout the quiz
-6. A final score display at the end
-7. Option to retry the quiz
-8. Visual feedback with different button colors for correct/incorrect answers
-9. Progress tracking (current question number)
-
-The app uses:
-
-- Shadcn UI components for consistent styling
-- React state management for handling the quiz flow
-- TypeScript for type safety
-- Responsive design that works well on both mobile and desktop
-- Clear visual hierarchy and spacing
-- Intuitive user interface with disabled buttons after selection
-- Comprehensive feedback system
-
-The questions cover various important aspects of American history, from the founding of the nation to constitutional amendments, making it both educational and engaging.
-      `),
+    `,
   },
-  "pomodoro timer": {
-    prompt: "make a pomodoro timer",
-    response: dedent(`
-      I'll create a Pomodoro timer with adjustable focus and break times, along with a sound notification when the timer completes. Since no reference image/app was provided in your prompt, I'll create a clean and functional design.
-
-      \`\`\`tsx{filename=pomodoro-timer.tsx}
-      import { useState, useEffect } from 'react'
+  "pixel rpg": {
+    prompt: "Create a pixel art RPG game",
+    response: `
+    import { useState, useEffect } from 'react'
 import { Button } from "/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "/components/ui/card"
-import { Play, Pause, X } from "lucide-react"
 
-export default function PomodoroTimer() {
-  const [mode, setMode] = useState<'focus' | 'break'>('focus')
-  const [isActive, setIsActive] = useState(false)
-  const [timeLeft, setTimeLeft] = useState(25 * 60) // 25 minutes in seconds
-  const [focusTime, setFocusTime] = useState(25)
-  const [breakTime, setBreakTime] = useState(5)
+export default function PixelRPG() {
+  const [player, setPlayer] = useState({
+    x: 100, y: 100, hp: 100, maxHp: 100, level: 1, exp: 0
+  })
+  const [enemies, setEnemies] = useState([
+    { id: 1, x: 300, y: 100, hp: 50, maxHp: 50, type: 'goblin' },
+    { id: 2, x: 200, y: 200, hp: 30, maxHp: 30, type: 'slime' },
+  ])
+  const [gameState, setGameState] = useState('exploring')
+  const [message, setMessage] = useState('')
+
+  const movePlayer = (dx: number, dy: number) => {
+    if (gameState !== 'exploring') return
+    
+    setPlayer(prev => ({
+      ...prev,
+      x: Math.max(0, Math.min(350, prev.x + dx)),
+      y: Math.max(0, Math.min(350, prev.y + dy))
+    }))
+  }
+
+  const attackEnemy = (enemyId: number) => {
+    const enemy = enemies.find(e => e.id === enemyId)
+    if (!enemy) return
+
+    const damage = Math.floor(Math.random() * 20) + 10
+    const newHp = Math.max(0, enemy.hp - damage)
+    
+    setEnemies(prev => prev.map(e => 
+      e.id === enemyId ? { ...e, hp: newHp } : e
+    ))
+
+    if (newHp === 0) {
+      setMessage('Defeated ' + enemy.type + '!')
+      setPlayer(prev => ({ ...prev, exp: prev.exp + 20 }))
+      setTimeout(() => {
+        setEnemies(prev => prev.filter(e => e.id !== enemyId))
+        setGameState('exploring')
+      }, 1000)
+    } else {
+      setMessage('Dealt ' + damage + ' damage to ' + enemy.type + '!')
+    }
+  }
+
+  const enemyAttack = () => {
+    const damage = Math.floor(Math.random() * 15) + 5
+    setPlayer(prev => ({ ...prev, hp: Math.max(0, prev.hp - damage) }))
+    setMessage('Enemy dealt ' + damage + ' damage!')
+  }
 
   useEffect(() => {
-    let interval: NodeJS.Timeout | null = null
-
-    if (isActive && timeLeft > 0) {
-      interval = setInterval(() => {
-        setTimeLeft((timeLeft) => timeLeft - 1)
-      }, 1000)
-    } else if (timeLeft === 0) {
-      playSound()
-      if (mode === 'focus') {
-        setMode('break')
-        setTimeLeft(breakTime * 60)
-      } else {
-        setMode('focus')
-        setTimeLeft(focusTime * 60)
+    const handleKeyDown = (e: KeyboardEvent) => {
+      switch (e.code) {
+        case 'ArrowUp': movePlayer(0, -20); break
+        case 'ArrowDown': movePlayer(0, 20); break
+        case 'ArrowLeft': movePlayer(-20, 0); break
+        case 'ArrowRight': movePlayer(20, 0); break
       }
     }
 
-    return () => {
-      if (interval) clearInterval(interval)
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [gameState])
+
+  useEffect(() => {
+    // Check for encounters
+    enemies.forEach(enemy => {
+      const distance = Math.sqrt(
+        Math.pow(player.x - enemy.x, 2) + Math.pow(player.y - enemy.y, 2)
+      )
+      if (distance < 30 && gameState === 'exploring') {
+        setGameState('combat')
+        setMessage('Encountered ' + enemy.type + '!')
+      }
+    })
+  }, [player, enemies, gameState])
+
+  return (
+    <Card className="w-full max-w-4xl mx-auto">
+      <CardHeader>
+        <CardTitle className="text-2xl font-bold text-center">Pixel RPG Adventure</CardTitle>
+        <div className="flex justify-between items-center">
+          <div className="space-y-1">
+            <p>Level: {player.level} | HP: {player.hp}/{player.maxHp}</p>
+            <p>EXP: {player.exp}</p>
+          </div>
+          <div className="text-sm text-gray-600">
+            {gameState === 'exploring' ? 'Exploring' : 'In Combat'}
+          </div>
+        </div>
+      </CardHeader>
+      <CardContent>
+        <div className="relative w-full h-400 bg-green-200 border-4 border-gray-800 overflow-hidden">
+          {/* Player */}
+          <div 
+            className="absolute w-6 h-6 bg-blue-500 border-2 border-blue-700"
+            style={{ 
+              left: player.x, 
+              top: player.y,
+              transition: 'all 0.1s ease-out'
+            }}
+          />
+          
+          {/* Enemies */}
+          {enemies.map(enemy => (
+            <div
+              key={enemy.id}
+              className="absolute w-6 h-6 border-2"
+              style={{
+                left: enemy.x,
+                top: enemy.y,
+                backgroundColor: enemy.type === 'goblin' ? '#8B4513' : '#90EE90',
+                borderColor: enemy.type === 'goblin' ? '#654321' : '#228B22'
+              }}
+            />
+          ))}
+          
+          {/* Combat UI */}
+          {gameState === 'combat' && enemies.length > 0 && (
+            <div className="absolute top-4 right-4 bg-black bg-opacity-75 text-white p-4 rounded">
+              <h3 className="font-bold mb-2">Combat</h3>
+              {enemies.map(enemy => (
+                <div key={enemy.id} className="mb-2">
+                  <p>{enemy.type} HP: {enemy.hp}/{enemy.maxHp}</p>
+                  <Button 
+                    size="sm" 
+                    onClick={() => attackEnemy(enemy.id)}
+                    className="mt-1"
+                  >
+                    Attack
+                  </Button>
+                </div>
+              ))}
+            </div>
+          )}
+          
+          {/* Message */}
+          {message && (
+            <div className="absolute bottom-4 left-4 bg-black bg-opacity-75 text-white p-2 rounded">
+              {message}
+            </div>
+          )}
+          
+          {/* Instructions */}
+          <div className="absolute bottom-4 right-4 text-sm bg-black bg-opacity-50 text-white p-2 rounded">
+            <p>Arrow Keys: Move</p>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+    `,
+  },
+  "pixel puzzle": {
+    prompt: "Make a pixel art puzzle game",
+    response: `
+    import { useState, useEffect } from 'react'
+import { Button } from "/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "/components/ui/card"
+
+export default function PixelPuzzle() {
+  const [board, setBoard] = useState<number[][]>([])
+  const [moves, setMoves] = useState(0)
+  const [solved, setSolved] = useState(false)
+  const [size, setSize] = useState(3)
+
+  const initializeBoard = (boardSize: number) => {
+    const numbers = Array.from({ length: boardSize * boardSize - 1 }, (_, i) => i + 1)
+    numbers.push(0) // Empty space
+    
+    // Shuffle the array
+    for (let i = numbers.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[numbers[i], numbers[j]] = [numbers[j], numbers[i]]
     }
-  }, [isActive, timeLeft, mode, focusTime, breakTime])
-
-  const toggleTimer = () => {
-    setIsActive(!isActive)
-  }
-
-  const resetTimer = () => {
-    setIsActive(false)
-    setMode('focus')
-    setTimeLeft(focusTime * 60)
-  }
-
-  const playSound = () => {
-    const audio = new Audio('data:audio/wav;base64,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qJrx4KOQjahZxWbcZgztj2c49nKmkId44S71j0c8eV9yDK6uPRzx5X18eDvjvQ6yKo9ZSS6l//8elePK/Lf//IInrOF/FvDoADYAGBMGb7FtErm5MXMlmPAJQVgWta7Zx2go+8xJ0UiCb8LHHdftWyLJE0QIAIsI+UbXu67dZMjmgDGCGl1H+vpF4NSDckSIkk7Vd+sxEhBQMRU8j/12UIRhzSaUdQ+rQU5kGeFxm+hb1oh6pWWmv3uvmReDl0UnvtapVaIzo1jZbf/pD6ElLqSX+rUmOQNpJFa/r+sa4e/pBlAABoAAAAA3CUgShLdGIxsY7AUABPRrgCABdDuQ5GC7DqPQCgbbJUAoRSUj+NIEig0YfyWUho1VBBBA//uQZB4ABZx5zfMakeAAAAmwAAAAF5F3P0w9GtAAACfAAAAAwLhMDmAYWMgVEG1U0FIGCBgXBXAtfMH10000EEEEEECUBYln03TTTdNBDZopopYvrTTdNa325mImNg3TTPV9q3pmY0xoO6bv3r00y+IDGid/9aaaZTGMuj9mpu9Mpio1dXrr5HERTZSmqU36A3CumzN/9Robv/Xx4v9ijkSRSNLQhAWumap82WRSBUqXStV/YcS+XVLnSS+WLDroqArFkMEsAS+eWmrUzrO0oEmE40RlMZ5+ODIkAyKAGUwZ3mVKmcamcJnMW26MRPgUw6j+LkhyHGVGYjSUUKNpuJUQoOIAyDvEyG8S5yfK6dhZc0Tx1KI/gviKL6qvvFs1+bWtaz58uUNnryq6kt5RzOCkPWlVqVX2a/EEBUdU1KrXLf40GoiiFXK///qpoiDXrOgqDR38JB0bw7SoL+ZB9o1RCkQjQ2CBYZKd/+VJxZRRZlqSkKiws0WFxUyCwsKiMy7hUVFhIaCrNQsKkTIsLivwKKigsj8XYlwt/WKi2N4d//uQRCSAAjURNIHpMZBGYiaQPSYyAAABLAAAAAAAACWAAAAApUF/Mg+0aohSIRobBAsMlO//Kk4soosy1JSFRYWaLC4qZBYWFRGZdwqKiwkNBVmoWFSJkWFxX4FFRQWR+LsS4W/rFRb/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////VEFHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAU291bmRib3kuZGUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMjAwNGh0dHA6Ly93d3cuc291bmRib3kuZGUAAAAAAAAAACU=')
-    audio.play()
-  }
-
-  const formatTime = (seconds: number): string => {
-    const mins = Math.floor(seconds / 60)
-    const secs = seconds % 60
-    return \`\${mins.toString().padStart(2, "0")}:\${secs.toString().padStart(2, "0")}\`
-  }
-
-  const adjustTime = (type: 'focus' | 'break', amount: number) => {
-    if (type === 'focus') {
-      const newTime = Math.max(1, Math.min(60, focusTime + amount))
-      setFocusTime(newTime)
-      if (mode === 'focus') setTimeLeft(newTime * 60)
-    } else {
-      const newTime = Math.max(1, Math.min(15, breakTime + amount))
-      setBreakTime(newTime)
-      if (mode === 'break') setTimeLeft(newTime * 60)
+    
+    const newBoard = []
+    for (let i = 0; i < boardSize; i++) {
+      newBoard.push(numbers.slice(i * boardSize, (i + 1) * boardSize))
     }
+    
+    setBoard(newBoard)
+    setMoves(0)
+    setSolved(false)
+  }
+
+  useEffect(() => {
+    initializeBoard(size)
+  }, [size])
+
+  const findEmptyPosition = () => {
+    for (let i = 0; i < board.length; i++) {
+      for (let j = 0; j < board[i].length; j++) {
+        if (board[i][j] === 0) return { row: i, col: j }
+      }
+    }
+    return null
+  }
+
+  const canMove = (row: number, col: number) => {
+    const empty = findEmptyPosition()
+    if (!empty) return false
+    
+    return (Math.abs(row - empty.row) === 1 && col === empty.col) ||
+           (Math.abs(col - empty.col) === 1 && row === empty.row)
+  }
+
+  const moveTile = (row: number, col: number) => {
+    if (!canMove(row, col)) return
+    
+    const empty = findEmptyPosition()!
+    const newBoard = board.map(row => [...row])
+    
+    // Swap the clicked tile with the empty space
+    newBoard[empty.row][empty.col] = board[row][col]
+    newBoard[row][col] = 0
+    
+    setBoard(newBoard)
+    setMoves(prev => prev + 1)
+    
+    // Check if puzzle is solved
+    checkSolved(newBoard)
+  }
+
+  const checkSolved = (currentBoard: number[][]) => {
+    const expected = []
+    for (let i = 1; i < size * size; i++) {
+      expected.push(i)
+    }
+    expected.push(0)
+    
+    const current = currentBoard.flat()
+    if (JSON.stringify(current) === JSON.stringify(expected)) {
+      setSolved(true)
+    }
+  }
+
+  const getTileColor = (value: number) => {
+    if (value === 0) return 'bg-gray-300'
+    const colors = [
+      'bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500',
+      'bg-purple-500', 'bg-pink-500', 'bg-indigo-500', 'bg-orange-500'
+    ]
+    return colors[(value - 1) % colors.length]
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle className="text-2xl text-center">Pomodoro Timer</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="flex justify-center space-x-4">
-            <Button
-              variant={mode === 'focus' ? 'default' : 'outline'}
-              onClick={() => {
-                setMode('focus')
-                setTimeLeft(focusTime * 60)
-                setIsActive(false)
-              }}
+    <Card className="w-full max-w-2xl mx-auto">
+      <CardHeader>
+        <CardTitle className="text-2xl font-bold text-center">Pixel Puzzle Slider</CardTitle>
+        <div className="flex justify-between items-center">
+          <span>Moves: {moves}</span>
+          <div className="space-x-2">
+            <Button 
+              size="sm" 
+              variant="outline"
+              onClick={() => setSize(3)}
             >
-              Focus
+              3x3
             </Button>
-            <Button
-              variant={mode === 'break' ? 'default' : 'outline'}
-              onClick={() => {
-                setMode('break')
-                setTimeLeft(breakTime * 60)
-                setIsActive(false)
-              }}
+            <Button 
+              size="sm" 
+              variant="outline"
+              onClick={() => setSize(4)}
             >
-              Break
+              4x4
             </Button>
           </div>
-
-          <div className="text-center">
-            <div className="text-6xl font-bold mb-8">{formatTime(timeLeft)}</div>
-
-            <div className="grid grid-cols-2 gap-4 mb-6">
-              <div className="space-y-2">
-                <p className="text-sm font-medium">Focus Time</p>
-                <div className="flex justify-center items-center space-x-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => adjustTime('focus', -1)}
-                  >
-                    -
-                  </Button>
-                  <span className="w-16 text-center">{focusTime}m</span>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => adjustTime('focus', 1)}
-                  >
-                    +
-                  </Button>
+        </div>
+      </CardHeader>
+      <CardContent>
+        <div className="flex flex-col items-center space-y-4">
+          {/* Game Board */}
+          <div 
+            className="grid gap-1 border-4 border-gray-800 p-2 bg-gray-200"
+            style={{ 
+              gridTemplateColumns: 'repeat(' + size + ', 1fr)',
+              width: (size * 80) + 'px',
+              height: (size * 80) + 'px'
+            }}
+          >
+            {board.map((row, rowIndex) =>
+              row.map((value, colIndex) => (
+                <div
+                  key={rowIndex + '-' + colIndex}
+                  className={
+                    'w-20 h-20 border-2 border-gray-800 flex items-center justify-center ' +
+                    'text-white font-bold text-xl cursor-pointer transition-all ' +
+                    (value === 0 ? 'bg-gray-300' : getTileColor(value)) +
+                    (canMove(rowIndex, colIndex) ? ' hover:scale-105' : '')
+                  }
+                  onClick={() => moveTile(rowIndex, colIndex)}
+                >
+                  {value !== 0 && value}
                 </div>
-              </div>
-
-              <div className="space-y-2">
-                <p className="text-sm font-medium">Break Time</p>
-                <div className="flex justify-center items-center space-x-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => adjustTime('break', -1)}
-                  >
-                    -
-                  </Button>
-                  <span className="w-16 text-center">{breakTime}m</span>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => adjustTime('break', 1)}
-                  >
-                    +
-                  </Button>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex justify-center space-x-4">
-              <Button
-                size="lg"
-                onClick={toggleTimer}
-                className="w-32"
-              >
-                {isActive ? <Pause className="w-4 h-4 mr-2" /> : <Play className="w-4 h-4 mr-2" />}
-                {isActive ? 'Pause' : 'Start'}
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                onClick={resetTimer}
-                className="w-32"
-              >
-                <X className="w-4 h-4 mr-2" />
-                Reset
-              </Button>
-            </div>
+              ))
+            )}
           </div>
-        </CardContent>
-      </Card>
-    </div>
-    \`\`\`
-    `),
+          
+          {/* Controls */}
+          <div className="space-x-2">
+            <Button onClick={() => initializeBoard(size)}>
+              New Game
+            </Button>
+            <Button 
+              variant="outline"
+              onClick={() => {
+                const empty = findEmptyPosition()
+                if (empty) {
+                  moveTile(empty.row, empty.col)
+                }
+              }}
+            >
+              Shuffle
+            </Button>
+          </div>
+          
+          {/* Victory Message */}
+          {solved && (
+            <div className="text-center p-4 bg-green-100 border-2 border-green-500 rounded">
+              <h3 className="text-xl font-bold text-green-800">Puzzle Solved!</h3>
+              <p className="text-green-600">Moves: {moves}</p>
+            </div>
+          )}
+          
+          {/* Instructions */}
+          <div className="text-sm text-gray-600 text-center">
+            <p>Click tiles adjacent to the empty space to move them</p>
+            <p>Arrange numbers in order from 1 to {size * size - 1}</p>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+    `,
+  },
+  "pixel arcade": {
+    prompt: "Create a pixel art arcade game",
+    response: `
+    import { useState, useEffect } from 'react'
+import { Button } from "/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "/components/ui/card"
+
+export default function PixelArcade() {
+  const [player, setPlayer] = useState({ x: 200, y: 350 })
+  const [bullets, setBullets] = useState<Array<{x: number, y: number, id: number}>>([])
+  const [enemies, setEnemies] = useState<Array<{x: number, y: number, id: number}>>([])
+  const [score, setScore] = useState(0)
+  const [lives, setLives] = useState(3)
+  const [gameRunning, setGameRunning] = useState(false)
+  const [gameOver, setGameOver] = useState(false)
+
+  useEffect(() => {
+    if (!gameRunning) return
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      switch (e.code) {
+        case 'ArrowLeft':
+          setPlayer(prev => ({ ...prev, x: Math.max(0, prev.x - 10) }))
+          break
+        case 'ArrowRight':
+          setPlayer(prev => ({ ...prev, x: Math.min(390, prev.x + 10) }))
+          break
+        case 'Space':
+          setBullets(prev => [...prev, { x: player.x + 15, y: player.y, id: Date.now() }])
+          break
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [gameRunning, player])
+
+  useEffect(() => {
+    if (!gameRunning) return
+
+    const gameLoop = setInterval(() => {
+      // Move bullets
+      setBullets(prev => prev
+        .map(bullet => ({ ...bullet, y: bullet.y - 5 }))
+        .filter(bullet => bullet.y > 0)
+      )
+
+      // Move enemies
+      setEnemies(prev => prev.map(enemy => ({ ...enemy, y: enemy.y + 2 })))
+
+      // Spawn enemies
+      if (Math.random() < 0.02) {
+        setEnemies(prev => [...prev, { 
+          x: Math.random() * 380, 
+          y: -20, 
+          id: Date.now() 
+        }])
+      }
+
+      // Check bullet-enemy collisions
+      setBullets(prev => {
+        const newBullets = [...prev]
+        setEnemies(prevEnemies => {
+          const newEnemies = [...prevEnemies]
+          
+          newBullets.forEach((bullet, bulletIndex) => {
+            newEnemies.forEach((enemy, enemyIndex) => {
+              if (Math.abs(bullet.x - enemy.x) < 20 && Math.abs(bullet.y - enemy.y) < 20) {
+                newBullets.splice(bulletIndex, 1)
+                newEnemies.splice(enemyIndex, 1)
+                setScore(prev => prev + 10)
+              }
+            })
+          })
+          
+          return newEnemies
+        })
+        return newBullets
+      })
+
+      // Check player-enemy collisions
+      setEnemies(prev => {
+        const newEnemies = prev.filter(enemy => {
+          if (Math.abs(player.x - enemy.x) < 30 && Math.abs(player.y - enemy.y) < 30) {
+            setLives(prev => prev - 1)
+            return false
+          }
+          return enemy.y < 400
+        })
+        return newEnemies
+      })
+
+      // Remove enemies that pass the bottom
+      setEnemies(prev => prev.filter(enemy => enemy.y < 400))
+    }, 50)
+
+    return () => clearInterval(gameLoop)
+  }, [gameRunning, player])
+
+  useEffect(() => {
+    if (lives <= 0) {
+      setGameOver(true)
+      setGameRunning(false)
+    }
+  }, [lives])
+
+  const startGame = () => {
+    setPlayer({ x: 200, y: 350 })
+    setBullets([])
+    setEnemies([])
+    setScore(0)
+    setLives(3)
+    setGameOver(false)
+    setGameRunning(true)
+  }
+
+  return (
+    <Card className="w-full max-w-2xl mx-auto">
+      <CardHeader>
+        <CardTitle className="text-2xl font-bold text-center">Pixel Space Shooter</CardTitle>
+        <div className="flex justify-between items-center">
+          <span>Score: {score}</span>
+          <span>Lives: {lives}</span>
+          <Button 
+            onClick={() => setGameRunning(!gameRunning)}
+            variant={gameRunning ? "destructive" : "default"}
+            disabled={gameOver}
+          >
+            {gameRunning ? "Pause" : "Start"}
+          </Button>
+        </div>
+      </CardHeader>
+      <CardContent>
+        <div className="relative w-full h-400 bg-black border-4 border-gray-800 overflow-hidden">
+          {/* Player */}
+          <div 
+            className="absolute w-8 h-8 bg-blue-500 border-2 border-blue-700"
+            style={{ 
+              left: player.x, 
+              top: player.y,
+              transition: 'left 0.1s ease-out'
+            }}
+          />
+          
+          {/* Bullets */}
+          {bullets.map(bullet => (
+            <div
+              key={bullet.id}
+              className="absolute w-2 h-4 bg-yellow-400"
+              style={{
+                left: bullet.x,
+                top: bullet.y
+              }}
+            />
+          ))}
+          
+          {/* Enemies */}
+          {enemies.map(enemy => (
+            <div
+              key={enemy.id}
+              className="absolute w-6 h-6 bg-red-500 border-2 border-red-700"
+              style={{
+                left: enemy.x,
+                top: enemy.y
+              }}
+            />
+          ))}
+          
+          {/* Game Over Screen */}
+          {gameOver && (
+            <div className="absolute inset-0 bg-black bg-opacity-75 flex items-center justify-center">
+              <div className="text-center text-white">
+                <h2 className="text-2xl font-bold mb-4">Game Over!</h2>
+                <p className="mb-4">Final Score: {score}</p>
+                <Button onClick={startGame}>Play Again</Button>
+              </div>
+            </div>
+          )}
+          
+          {/* Instructions */}
+          <div className="absolute bottom-4 left-4 text-sm bg-black bg-opacity-50 text-white p-2 rounded">
+            <p>Arrow Keys: Move | Space: Shoot</p>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+    `,
   },
 };

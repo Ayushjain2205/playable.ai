@@ -117,18 +117,18 @@ export function getMainCodingPrompt(mostSimilarExample: string) {
   Here's a good example:
 
   Prompt:
-  ${examples["calculator app"].prompt}
+  ${examples["pixel platformer"].prompt}
 
   Response:
-  ${examples["calculator app"].response}
+  ${examples["pixel platformer"].response}
   `;
 
   if (mostSimilarExample !== "none") {
     assert.ok(
-      mostSimilarExample === "landing page" ||
-        mostSimilarExample === "blog app" ||
-        mostSimilarExample === "quiz app" ||
-        mostSimilarExample === "pomodoro timer",
+      mostSimilarExample === "pixel platformer" ||
+        mostSimilarExample === "pixel rpg" ||
+        mostSimilarExample === "pixel puzzle" ||
+        mostSimilarExample === "pixel arcade",
     );
     systemPrompt += `
     Here another example (thats missing explanations and is just code):

@@ -16,31 +16,34 @@ export const Context = createContext<{
   setStreamPromise: () => {},
 });
 
-// Base Sepolia config
-const baseSepolia = {
-  id: 84532,
-  name: "Base Sepolia",
+// Etherlink testnet config
+const etherlinkTestnet = {
+  id: 128123,
+  name: "Etherlink Testnet",
   nativeCurrency: {
-    name: "Ethereum",
-    symbol: "ETH",
+    name: "Etherlink",
+    symbol: "XTZ",
     decimals: 18,
   },
   rpcUrls: {
-    default: { http: ["https://sepolia.base.org"] },
-    public: { http: ["https://sepolia.base.org"] },
+    default: { http: ["https://rpc.ankr.com/etherlink_testnet"] },
+    public: { http: ["https://rpc.ankr.com/etherlink_testnet"] },
   },
   blockExplorers: {
-    default: { name: "Basescan", url: "https://sepolia.basescan.org" },
+    default: {
+      name: "Etherlink Explorer",
+      url: "https://testnet-explorer.etherlink.com",
+    },
   },
   testnet: true,
 };
 
 const config = getDefaultConfig({
   appName: "ZappForge",
-  projectId: "zappforge-base-sepolia", // You can use any string here
-  chains: [baseSepolia],
+  projectId: "zappforge-etherlink-testnet", // You can use any string here
+  chains: [etherlinkTestnet],
   transports: {
-    [baseSepolia.id]: http("https://sepolia.base.org"),
+    [etherlinkTestnet.id]: http("https://rpc.ankr.com/etherlink_testnet"),
   },
 });
 

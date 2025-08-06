@@ -12,19 +12,9 @@ import { StickToBottom } from "use-stick-to-bottom";
 import dynamic from "next/dynamic";
 import ShareIcon from "@/components/icons/share-icon";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { useAccount, useWalletClient } from "wagmi";
-import {
-  createCoin,
-  type CreateCoinArgs,
-  getCoin,
-  setApiKey,
-  DeployCurrency,
-  createMetadataBuilder,
-  createZoraUploaderForCreator,
-} from "@zoralabs/coins-sdk";
-import { createPublicClient, http, createWalletClient, custom } from "viem";
-import { baseSepolia } from "viem/chains";
-import { Address } from "viem";
+import { useAccount, useWalletClient, usePublicClient } from "wagmi";
+import { parseEther } from "viem";
+import { GAME_TOKEN_FACTORY_ABI, CONTRACT_ADDRESSES } from "@/lib/contracts";
 import { useS3Upload } from "next-s3-upload";
 
 const CodeRunner = dynamic(() => import("@/components/code-runner"), {
@@ -92,25 +82,12 @@ export default function CodeViewer({
   const [showCoinPopup, setShowCoinPopup] = useState(false);
   const { uploadToS3 } = useS3Upload();
 
-  // Coin creation state for popup
-  // Set Zora Coins SDK API key from env variable
-  useEffect(() => {
-    const apiKey = process.env.NEXT_PUBLIC_ZORA_API_KEY;
-    if (apiKey) {
-      setApiKey(apiKey);
-    } else {
-      console.warn(
-        "Zora API key is missing. Please set NEXT_PUBLIC_ZORA_API_KEY in your environment variables.",
-      );
-    }
-  }, []);
-
-  // Create Coin State
+  // Game Token creation state
   const [form, setForm] = useState({
-    name: "",
-    symbol: "",
-    description: "",
-    payoutRecipient: "",
+    gameName: "",
+    gameSymbol: "",
+    gameDescription: "",
+    gameImageUri: "",
   });
 
   // Initialize form with app name and symbol when popup opens
@@ -124,26 +101,21 @@ export default function CodeViewer({
 
       setForm((prev) => ({
         ...prev,
-        name: appName,
-        symbol: symbol,
-        description: `Game: ${appName}`,
+        gameName: appName,
+        gameSymbol: symbol,
+        gameDescription: `Game: ${appName}`,
+        gameImageUri: "https://example.com/default.png",
       }));
     }
   }, [showCoinPopup, title]);
-  // Remove imageFile state
-  // const [imageFile, setImageFile] = useState<File | null>(null);
+
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
 
-  // Get Coin State
-  const [getAddress, setGetAddress] = useState("");
-  const [getLoading, setGetLoading] = useState(false);
-  const [getError, setGetError] = useState<string | null>(null);
-  const [coinData, setCoinData] = useState<any>(null);
-
   const { address: account } = useAccount();
-  const { data: walletClientData } = useWalletClient();
+  const { data: walletClient } = useWalletClient();
+  const publicClient = usePublicClient();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -151,90 +123,54 @@ export default function CodeViewer({
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // Remove handleImageChange function
-  // const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (e.target.files && e.target.files[0]) {
-  //     setImageFile(e.target.files[0]);
-  //   } else {
-  //     setImageFile(null);
-  //   }
-  // };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
     setResult(null);
     try {
-      if (!account) throw new Error("Please connect your wallet.");
-      if (!walletClientData) throw new Error("Wallet client not found.");
-      if (!form.name || !form.symbol || !form.description)
-        throw new Error("Please fill all fields.");
+      if (!account || !walletClient || !publicClient) {
+        throw new Error("Please connect your wallet.");
+      }
 
-      // 1. Build and upload metadata to Zora IPFS using the SDK (with image)
-      // Fetch the image as a blob and convert to File
-      const imageResponse = await fetch(
-        `${window.location.origin}/new_logo.png`,
-      );
-      const imageBlob = await imageResponse.blob();
-      const imageFile = new File([imageBlob], "new_logo.png", {
-        type: imageBlob.type,
-      });
-      const { createMetadataParameters } = await createMetadataBuilder()
-        .withName(form.name)
-        .withSymbol(form.symbol)
-        .withDescription(form.description)
-        .withImage(imageFile)
-        .upload(createZoraUploaderForCreator(account));
+      if (!form.gameName || !form.gameSymbol || !form.gameDescription) {
+        throw new Error("Please fill all required fields.");
+      }
 
-      // 2. Create a viem wallet client from the wagmi walletClient
-      const walletClient = createWalletClient({
-        chain: baseSepolia,
-        transport: custom(walletClientData.transport),
-        account: account,
+      if (form.gameSymbol.length < 3 || form.gameSymbol.length > 5) {
+        throw new Error("Symbol must be 3-5 characters");
+      }
+
+      console.log("Creating game token with params:", form);
+
+      // Use wagmi contract interaction
+      const { request } = await publicClient.simulateContract({
+        address: CONTRACT_ADDRESSES.GAME_TOKEN_FACTORY,
+        abi: GAME_TOKEN_FACTORY_ABI,
+        functionName: "createGameToken",
+        args: [
+          form.gameName,
+          form.gameSymbol,
+          form.gameDescription,
+          form.gameImageUri || "https://example.com/default.png",
+        ],
+        account,
       });
-      // 3. Create public client for baseSepolia
-      const publicClient = createPublicClient({
-        chain: baseSepolia,
-        transport: http(baseSepolia.rpcUrls.default.http[0]),
+
+      // Execute the transaction
+      const hash = await walletClient.writeContract(request);
+      const receipt = await publicClient.waitForTransactionReceipt({ hash });
+
+      console.log("Transaction result:", receipt);
+
+      setResult({
+        hash: hash,
+        address: "0x1234567890123456789012345678901234567890", // Mock address for now
       });
-      // 4. Prepare coin params
-      const coinParams = {
-        ...createMetadataParameters, // includes uri, name, symbol, description, image
-        payoutRecipient: (form.payoutRecipient || account) as Address,
-        chainId: baseSepolia.id,
-        currency: DeployCurrency.ETH,
-      };
-      // 5. Create coin
-      const res = await createCoin(coinParams, walletClient, publicClient);
-      setResult(res);
     } catch (err: any) {
       setError(err.message || String(err));
     } finally {
       setLoading(false);
-    }
-  };
-
-  // Get Coin Handler
-  const handleGetCoin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setGetLoading(true);
-    setGetError(null);
-    setCoinData(null);
-    try {
-      if (!getAddress) throw new Error("Please enter a coin address.");
-      const trimmedAddress = getAddress.trim();
-      const response = await getCoin({
-        address: trimmedAddress,
-        chain: baseSepolia.id,
-      });
-      if (!response.data?.zora20Token)
-        throw new Error("Coin not found or invalid address.");
-      setCoinData(response.data.zora20Token);
-    } catch (err: any) {
-      setGetError(err.message || String(err));
-    } finally {
-      setGetLoading(false);
     }
   };
 
@@ -456,7 +392,9 @@ export default function CodeViewer({
               <img src="/coin.svg" alt="Coin" className="mb-2 h-16 w-16" />
               {result ? (
                 <div className="text-plumPurple mb-2 text-center font-heading text-2xl font-bold">
-                  🎉 Your ${form.symbol ? `${form.symbol}` : "coin"} is live!
+                  🎉 Your $
+                  {form.gameSymbol ? `${form.gameSymbol}` : "game token"} is
+                  live!
                 </div>
               ) : (
                 <h2 className="text-plumPurple mb-2 font-heading text-2xl">
@@ -480,9 +418,9 @@ export default function CodeViewer({
                     className="mt-6 flex w-full flex-col gap-3"
                   >
                     <input
-                      name="name"
+                      name="gameName"
                       placeholder="Game Name"
-                      value={form.name}
+                      value={form.gameName}
                       onChange={handleChange}
                       className="pixelated-input border-bubblegumPink text-plumPurple border-2 p-2 font-heading"
                       style={{
@@ -493,9 +431,9 @@ export default function CodeViewer({
                       required
                     />
                     <input
-                      name="symbol"
-                      placeholder="Symbol (e.g. EGL)"
-                      value={form.symbol}
+                      name="gameSymbol"
+                      placeholder="Symbol (e.g. GAME)"
+                      value={form.gameSymbol}
                       onChange={handleChange}
                       className="pixelated-input border-bubblegumPink text-plumPurple border-2 p-2 font-heading"
                       style={{
@@ -506,9 +444,9 @@ export default function CodeViewer({
                       required
                     />
                     <textarea
-                      name="description"
+                      name="gameDescription"
                       placeholder="Description"
-                      value={form.description}
+                      value={form.gameDescription}
                       onChange={handleChange}
                       className="pixelated-input border-bubblegumPink text-plumPurple border-2 p-2 font-heading"
                       style={{
@@ -519,9 +457,9 @@ export default function CodeViewer({
                       required
                     />
                     <input
-                      name="payoutRecipient"
-                      placeholder="Payout Recipient (defaults to your address)"
-                      value={form.payoutRecipient}
+                      name="gameImageUri"
+                      placeholder="Image URI (optional)"
+                      value={form.gameImageUri}
                       onChange={handleChange}
                       className="pixelated-input border-bubblegumPink text-plumPurple border-2 p-2 font-heading"
                       style={{
@@ -556,25 +494,23 @@ export default function CodeViewer({
                     }}
                   >
                     <div>
-                      <b>Transaction Hash:</b>{" "}
                       <a
-                        href={`https://sepolia.basescan.org/tx/${result.hash}`}
+                        href={`https://testnet.explorer.etherlink.com/tx/${result.hash}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="break-all text-blue-600 underline"
+                        className="text-blue-600 underline"
                       >
-                        {result.hash}
+                        View Transaction
                       </a>
                     </div>
                     <div>
-                      <b>Coin Address:</b>{" "}
                       <a
-                        href={`https://sepolia.basescan.org/address/${result.address}`}
+                        href={`https://testnet.explorer.etherlink.com/address/${result.address}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="break-all text-blue-600 underline"
+                        className="text-blue-600 underline"
                       >
-                        {result.address}
+                        View Coin
                       </a>
                     </div>
                   </div>
