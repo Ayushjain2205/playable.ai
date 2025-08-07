@@ -1,6 +1,6 @@
-import { getPrisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { cache } from "react";
+import { getPrisma } from "@/lib/prisma";
 import PageClient from "./page.client";
 
 export default async function Page({
@@ -14,7 +14,7 @@ export default async function Page({
   if (!chat) notFound();
 
   return (
-    <div className="min-h-screen bg-softPeach font-body text-plumPurple">
+    <div className="bg-softPeach font-body text-plumPurple min-h-screen">
       <PageClient chat={chat} />
     </div>
   );

@@ -11,7 +11,7 @@ import { Share } from "./share";
 import { StickToBottom } from "use-stick-to-bottom";
 import dynamic from "next/dynamic";
 import ShareIcon from "@/components/icons/share-icon";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { ConnectButton, useConnectModal } from "@rainbow-me/rainbowkit";
 import { useAccount, useWalletClient, usePublicClient } from "wagmi";
 import { parseEther } from "viem";
 import { GAME_TOKEN_FACTORY_ABI, CONTRACT_ADDRESSES } from "@/lib/contracts";
@@ -116,6 +116,7 @@ export default function CodeViewer({
   const { address: account } = useAccount();
   const { data: walletClient } = useWalletClient();
   const publicClient = usePublicClient();
+  const { openConnectModal } = useConnectModal();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -405,69 +406,112 @@ export default function CodeViewer({
             <div className="flex w-full flex-col items-center px-8 pb-8">
               {!result ? (
                 <>
-                  <ConnectButton
-                    chainStatus="icon"
-                    showBalance={false}
-                    accountStatus={{
-                      smallScreen: "avatar",
-                      largeScreen: "full",
-                    }}
-                  />
+                  {!account ? (
+                    <div className="mb-4 flex w-full items-center justify-center">
+                      <button
+                        type="button"
+                        onClick={openConnectModal}
+                        className="text-bubblegumPink hover:text-lemonYellow inline-flex items-center gap-1 font-heading text-xs underline"
+                      >
+                        <svg
+                          className="h-3 w-3"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                          />
+                        </svg>
+                        Connect wallet to launch
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="mb-4 flex w-full items-center justify-center">
+                      <span className="font-heading text-xs text-gray-500">
+                        ✓ Connected ({account.slice(0, 4)}...{account.slice(-4)}
+                        )
+                      </span>
+                    </div>
+                  )}
                   <form
                     onSubmit={handleSubmit}
                     className="mt-6 flex w-full flex-col gap-3"
                   >
-                    <input
-                      name="gameName"
-                      placeholder="Game Name"
-                      value={form.gameName}
-                      onChange={handleChange}
-                      className="pixelated-input border-bubblegumPink text-plumPurple border-2 p-2 font-heading"
-                      style={{
-                        border: "2px solid #FF69B4",
-                        boxShadow:
-                          "0px 2px #0D1B52, 0px -2px #0D1B52, 2px 0px #0D1B52, -2px 0px #0D1B52, inset 0px 2px #ffffff36",
-                      }}
-                      required
-                    />
-                    <input
-                      name="gameSymbol"
-                      placeholder="Symbol (e.g. GAME)"
-                      value={form.gameSymbol}
-                      onChange={handleChange}
-                      className="pixelated-input border-bubblegumPink text-plumPurple border-2 p-2 font-heading"
-                      style={{
-                        border: "2px solid #FF69B4",
-                        boxShadow:
-                          "0px 2px #0D1B52, 0px -2px #0D1B52, 2px 0px #0D1B52, -2px 0px #0D1B52, inset 0px 2px #ffffff36",
-                      }}
-                      required
-                    />
-                    <textarea
-                      name="gameDescription"
-                      placeholder="Description"
-                      value={form.gameDescription}
-                      onChange={handleChange}
-                      className="pixelated-input border-bubblegumPink text-plumPurple border-2 p-2 font-heading"
-                      style={{
-                        border: "2px solid #FF69B4",
-                        boxShadow:
-                          "0px 2px #0D1B52, 0px -2px #0D1B52, 2px 0px #0D1B52, -2px 0px #0D1B52, inset 0px 2px #ffffff36",
-                      }}
-                      required
-                    />
-                    <input
-                      name="gameImageUri"
-                      placeholder="Image URI (optional)"
-                      value={form.gameImageUri}
-                      onChange={handleChange}
-                      className="pixelated-input border-bubblegumPink text-plumPurple border-2 p-2 font-heading"
-                      style={{
-                        border: "2px solid #FF69B4",
-                        boxShadow:
-                          "0px 2px #0D1B52, 0px -2px #0D1B52, 2px 0px #0D1B52, -2px 0px #0D1B52, inset 0px 2px #ffffff36",
-                      }}
-                    />
+                    <div className="flex flex-col gap-1">
+                      <label className="font-heading text-xs text-gray-500">
+                        Game Name
+                      </label>
+                      <input
+                        name="gameName"
+                        placeholder="Enter game name"
+                        value={form.gameName}
+                        onChange={handleChange}
+                        className="pixelated-input border-bubblegumPink text-plumPurple border-2 p-2 font-heading"
+                        style={{
+                          border: "2px solid #FF69B4",
+                          boxShadow:
+                            "0px 2px #0D1B52, 0px -2px #0D1B52, 2px 0px #0D1B52, -2px 0px #0D1B52, inset 0px 2px #ffffff36",
+                        }}
+                        required
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <label className="font-heading text-xs text-gray-500">
+                        Ticker
+                      </label>
+                      <input
+                        name="gameSymbol"
+                        placeholder="e.g. GAME"
+                        value={form.gameSymbol}
+                        onChange={handleChange}
+                        className="pixelated-input border-bubblegumPink text-plumPurple border-2 p-2 font-heading"
+                        style={{
+                          border: "2px solid #FF69B4",
+                          boxShadow:
+                            "0px 2px #0D1B52, 0px -2px #0D1B52, 2px 0px #0D1B52, -2px 0px #0D1B52, inset 0px 2px #ffffff36",
+                        }}
+                        required
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <label className="font-heading text-xs text-gray-500">
+                        Description
+                      </label>
+                      <textarea
+                        name="gameDescription"
+                        placeholder="Describe your game"
+                        value={form.gameDescription}
+                        onChange={handleChange}
+                        className="pixelated-input border-bubblegumPink text-plumPurple border-2 p-2 font-heading"
+                        style={{
+                          border: "2px solid #FF69B4",
+                          boxShadow:
+                            "0px 2px #0D1B52, 0px -2px #0D1B52, 2px 0px #0D1B52, -2px 0px #0D1B52, inset 0px 2px #ffffff36",
+                        }}
+                        required
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <label className="font-heading text-xs text-gray-500">
+                        Image URI (optional)
+                      </label>
+                      <input
+                        name="gameImageUri"
+                        placeholder="https://example.com/image.png"
+                        value={form.gameImageUri}
+                        onChange={handleChange}
+                        className="pixelated-input border-bubblegumPink text-plumPurple border-2 p-2 font-heading"
+                        style={{
+                          border: "2px solid #FF69B4",
+                          boxShadow:
+                            "0px 2px #0D1B52, 0px -2px #0D1B52, 2px 0px #0D1B52, -2px 0px #0D1B52, inset 0px 2px #ffffff36",
+                        }}
+                      />
+                    </div>
                     <button
                       type="submit"
                       className="pixelated-action-button bg-bubblegumPink text-plumPurple gap-2 px-6 py-3 font-heading font-bold disabled:opacity-50"

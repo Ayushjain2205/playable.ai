@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ConnectButton } from "thirdweb/react";
 import { client } from "@/lib/client";
 import { etherlinkTestnet } from "thirdweb/chains";
+import { useRouter } from "next/navigation";
 
 // Mock data for games
 const mockGames = [
@@ -96,6 +97,7 @@ const mockGames = [
 
 export default function GamesPage() {
   const [activeTab, setActiveTab] = useState("top-games");
+  const router = useRouter();
 
   return (
     <div className="font-body min-h-screen bg-gradient-to-b from-sky-top to-sky-bottom text-text-primary">
@@ -103,7 +105,7 @@ export default function GamesPage() {
       <header className="absolute left-0 top-0 z-50 w-full px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <div className="">
+            <div className="cursor-pointer" onClick={() => router.push("/")}>
               <Image
                 src="/new_logo.svg"
                 alt="Playable Logo"
@@ -148,14 +150,14 @@ export default function GamesPage() {
                 Top Games
               </button>
               <button
-                onClick={() => setActiveTab("recent-graduates")}
+                onClick={() => setActiveTab("most-played")}
                 className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
-                  activeTab === "recent-graduates"
+                  activeTab === "most-played"
                     ? "bg-gray-700/50 text-text-primary"
                     : "text-text-primary/70 hover:text-text-primary"
                 }`}
               >
-                Recent Graduates
+                Most Played
               </button>
               <button
                 onClick={() => setActiveTab("most-recent")}

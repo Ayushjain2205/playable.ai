@@ -13,8 +13,48 @@ import CodeViewer from "./code-viewer";
 import CodeViewerLayout from "./code-viewer-layout";
 import type { Chat } from "./page";
 import { Context } from "../../providers";
+import { WagmiProvider, http } from "wagmi";
+import {
+  getDefaultConfig,
+  RainbowKitProvider,
+  darkTheme,
+} from "@rainbow-me/rainbowkit";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-export default function PageClient({ chat }: { chat: Chat }) {
+// Etherlink testnet config for RainbowKit
+const etherlinkTestnet = {
+  id: 128123,
+  name: "Etherlink Testnet",
+  nativeCurrency: {
+    name: "Etherlink",
+    symbol: "XTZ",
+    decimals: 18,
+  },
+  rpcUrls: {
+    default: { http: ["https://rpc.ankr.com/etherlink_testnet"] },
+    public: { http: ["https://rpc.ankr.com/etherlink_testnet"] },
+  },
+  blockExplorers: {
+    default: {
+      name: "Etherlink Explorer",
+      url: "https://testnet-explorer.etherlink.com",
+    },
+  },
+  testnet: true,
+};
+
+const config = getDefaultConfig({
+  appName: "ZappForge",
+  projectId: "zappforge-etherlink-testnet",
+  chains: [etherlinkTestnet],
+  transports: {
+    [etherlinkTestnet.id]: http("https://rpc.ankr.com/etherlink_testnet"),
+  },
+});
+
+const queryClient = new QueryClient();
+
+function PageClientContent({ chat }: { chat: Chat }) {
   const context = use(Context);
   const [streamPromise, setStreamPromise] = useState<
     Promise<ReadableStream> | undefined
@@ -97,7 +137,7 @@ export default function PageClient({ chat }: { chat: Chat }) {
             <Link href="/">
               <LogoSmall />
             </Link>
-            <p className="font-heading font-semibold text-plumPurple">
+            <p className="text-plumPurple font-heading font-semibold">
               {chat.title}
             </p>
           </div>
@@ -177,5 +217,17 @@ export default function PageClient({ chat }: { chat: Chat }) {
         </CodeViewerLayout>
       </div>
     </div>
+  );
+}
+
+export default function PageClient({ chat }: { chat: Chat }) {
+  return (
+    <WagmiProvider config={config}>
+      <QueryClientProvider client={queryClient}>
+        <RainbowKitProvider theme={darkTheme()}>
+          <PageClientContent chat={chat} />
+        </RainbowKitProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
   );
 }
